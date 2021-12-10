@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './MovieList.css'
 import Details from '../Details/Details';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 function MovieList() {
 
@@ -18,6 +19,11 @@ function MovieList() {
     return (
         <main>
             <h1>MovieList</h1>
+            <Link to = "/AddMovie">
+            <Button>
+                Add New Movie
+            </Button>
+            </Link>
             <section className="movies">
                 {movies.map(movie => {
                     return (
@@ -30,6 +36,7 @@ function MovieList() {
                     );
                 })}
             </section>
+           
         </main>
 
     );
