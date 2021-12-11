@@ -14,7 +14,8 @@ import axios from 'axios';
 // Create the rootSaga generator function. This is listening for the dispatch
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-    yield takeEvery('ADD_MOVIES', postAllMovies);
+    yield takeEvery('SET_GENRES', fetchMovieGenres);
+    yield takeEvery( 'POST_MOVIE',postAllMovies)
 }
 
 function* fetchAllMovies() {
@@ -31,14 +32,26 @@ function* fetchAllMovies() {
 }
 
 function *postAllMovies( action ){
-    console.log (' in *postAllMovies', action);
+    console.log (' in *postAllMovies', action.payload);
+    try {
+      const response = yield axios.post('/api/movie', action.payload);
+      console.log ( 'adding movie:', response.data);
+      yield put( {type: 'FETCH_MOVIES', payload: response.data} );
+      alert ('movie saved!');
+    } catch (err){
+        alert ('no postAllMovies');
+        console.log (err);
     }
 
+ }
+    
 
-function* fetchAllGenres() {
-    // get all movies from the DB
+
+function* fetchMovieGenres() {
+    // get the movie genres from the joined table
+    console.log ('fetchMovieGenres:', action.payload);
     try {
-        const movies = yield axios.get('/api/genre');
+        const movies = yield axios.get(`'/api/genre/${action.payload}`);
         console.log('get all:', genres.data);
         yield put({ type: 'SET_GENRES', payload: genres.data });
 
