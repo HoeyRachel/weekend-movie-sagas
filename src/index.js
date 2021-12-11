@@ -11,9 +11,10 @@ import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
 
-// Create the rootSaga generator function
+// Create the rootSaga generator function. This is listening for the dispatch
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    yield takeEvery('ADD_MOVIES', postAllMovies);
 }
 
 function* fetchAllMovies() {
@@ -22,6 +23,24 @@ function* fetchAllMovies() {
         const movies = yield axios.get('/api/movie');
         console.log('get all:', movies.data);
         yield put({ type: 'SET_MOVIES', payload: movies.data });
+
+    } catch {
+        console.log('get all error');
+    }
+        
+}
+
+function *postAllMovies( action ){
+    console.log (' in *postAllMovies', action);
+    }
+
+
+function* fetchAllGenres() {
+    // get all movies from the DB
+    try {
+        const movies = yield axios.get('/api/genre');
+        console.log('get all:', genres.data);
+        yield put({ type: 'SET_GENRES', payload: genres.data });
 
     } catch {
         console.log('get all error');

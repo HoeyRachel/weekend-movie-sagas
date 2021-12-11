@@ -4,6 +4,7 @@ import './MovieList.css'
 import Details from '../Details/Details';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import req from 'express/lib/request';
 
 function MovieList() {
 
@@ -11,6 +12,7 @@ function MovieList() {
     const movies = useSelector(store => store.movies);
 
     useEffect(() => {
+        console.log ('-------In Use Effect Movie List')
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
@@ -25,11 +27,12 @@ function MovieList() {
             </Button>
             </Link>
             <section className="movies">
+                {/* Mapping through the reducer  */}
                 {movies.map(movie => {
                     return (
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
-                            <Link to = "/Details">
+                            <Link to = "/Details"  >
                             <img src={movie.poster} alt={movie.title} />
                             </Link>
                         </div>
