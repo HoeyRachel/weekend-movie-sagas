@@ -2,12 +2,12 @@ import { TextField, Button } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import './AddMovie.css'
 
-function AddMovie() {
+function AddMovie(props) {
     //use existing reducer to add movies to the store
     const movies = useSelector (store => store.movies);
+    ///logging all the movies in the store
     console.log ('in Movie Reducer Add Movie Page', movies);
     const dispatch = useDispatch();
     // local state set to empty object 
@@ -34,7 +34,24 @@ function AddMovie() {
         
       }
 
-    
+      const handleMovieImage = (event)=>{
+        console.log (' in handleMovieImage:', event.target.value );
+        setNewMovie({...addMovie, poster: event.target.value});
+        
+      }
+
+      const handleDescription= (event)=>{
+        console.log (' in handleDescription:', event.target.value );
+        setNewMovie({...addMovie, description: event.target.value});
+        
+      }
+
+      const handleGenre= (event)=>{
+        console.log (' in handleGenre:', event.target.value );
+        setNewMovie({...addMovie, genre_id: Number(event.target.value)});
+        
+      }
+   
    
 
     return (
@@ -46,25 +63,43 @@ function AddMovie() {
            onChange ={(event)=>handleMovieTitle(event)}
            >
            </TextField>
-           <label>
-               Enter Movie Description
-            </label>
-           <textarea
-           value=""
-           onChange ={(event)=>addNewDescription(event)}
+           <TextField
+           label="Add Movie Poster URL" 
+           defaultValue=""
+           onChange ={(event)=>handleMovieImage(event)}
            >
-
-           </textarea>
+           </TextField>
+           
+           <textarea
+           placeholder='Enter Movie Description'
+           type = "text"
+           onChange ={(event)=>handleDescription(event)}
+           >
+            </textarea>
+            <select name="genre" id ="genre" onChange={(event)=>handleGenre(event)}>
+            <option value="1">Adventure</option>
+                <option value="2">Animated</option>
+                <option value="3">Biographical</option>
+                <option value="4">Comedy</option>
+                <option value="5">Disaster</option>
+                <option value="6">Drama</option>
+                <option value="7">Epic</option>
+                <option value="8">Fantasy</option>
+                <option value="9">Musical</option>
+                <option value="10">Romantic</option>
+                <option value="11">Science Fiction</option>
+                <option value="12">Space Opera</option>
+                <option value="13">Superhero</option>
+            </select>
            
            
            
             {/* send new movie to the store with dispatch  */}
            <Button
+           onClick={postMovie}
            >
-           
-           {/* <Link to="/"> */}
-           Save New Movie
-           {/* </Link> */}
+           Add New Movie
+         
            </Button>
             
         </main>
