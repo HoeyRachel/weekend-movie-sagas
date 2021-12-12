@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './AddMovie.css'
+import { Link } from 'react-router-dom';
 
 function AddMovie(props) {
     //use existing reducer to add movies to the store
@@ -76,8 +77,10 @@ function AddMovie(props) {
            onChange ={(event)=>handleDescription(event)}
            >
             </textarea>
+        
             <select name="genre" id ="genre" onChange={(event)=>handleGenre(event)}>
-            <option value="1">Adventure</option>
+               <option> Select a Genre </option>
+                <option value="1">Adventure</option>
                 <option value="2">Animated</option>
                 <option value="3">Biographical</option>
                 <option value="4">Comedy</option>
@@ -100,6 +103,11 @@ function AddMovie(props) {
            >
            Add New Movie
          
+           </Button>
+           <Button>
+               <Link to = "/">
+               Cancel
+               </Link>
            </Button>
             
         </main>

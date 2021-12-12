@@ -16,8 +16,8 @@ router.get('/:id', (req, res) => {
 
   pool.query(query)
     .then(result => {
-      console.log(results.rows);
-      res.send(results.rows);
+      console.log(result.rows);
+      res.send(result.rows);
     }).catch
     (err => {
       console.log ('ERROR: Get all genres', err);

@@ -1,45 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './MovieList.css'
+import '../Details/Details';
 import Details from '../Details/Details';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import req from 'express/lib/request';
+import axios from 'axios';
+
+
+
 
 function MovieList() {
 
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
+    const moviedetails = useSelector(store => store.moviedetails);
+    
 
     useEffect(() => {
-        console.log ('-------In Use Effect Movie List')
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
-   
+
 
     return (
         <main>
-            <h1>MovieList</h1>
-            <Link to = "/AddMovie">
-            <Button>
-                Add New Movie
-            </Button>
-            </Link>
+            <div className="movieListTitle">
+            <h1>Movie List</h1>
+            </div>
             <section className="movies">
-                {/* Mapping through the reducer  */}
-                {movies.map(movie => {
+                {movies.map(movie => { 
+                const addNewMovie = () => { 
+    
+                    dispatch( {
+                        type: 'SET_ID', 
+                        payload:{
+                            id: movie.id, 
+                            title: movie.title, 
+                            poster: movie.poster, 
+                            description: movie.description 
+                            }
+                        } )
+                }
                     return (
-                        <div key={movie.id} >
-                            <h3>{movie.title}</h3>
-                            <Link to = "/Details"  >
-                            <img src={movie.poster} alt={movie.title} />
-                            </Link>
+                        <div className="movieListDiv">
+                           
+                            <div>              
+                                        <p key={movie.id}>
+                                            <h6>{movie.title}</h6>
+                                            <div>
+                                                <Link to="/details">
+                                                    <img className="imgclass" src={movie.poster} alt={movie.title} onClick={addNewMovie}/>
+                                                </Link>
+                                            </div>
+                                        </p>
+                                   
+                            </div>
+                            <div>
+                                
+                            </div>
+                            
                         </div>
+                        
                     );
                 })}
             </section>
            
+
         </main>
 
     );
