@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './MovieList.css'
-import '../Details/Details';
-import Details from '../Details/Details';
+import '../Details/Details'
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
 
 
 
@@ -27,6 +26,11 @@ function MovieList() {
             <div className="movieListTitle">
             <h1>Movie List</h1>
             </div>
+            <Link to = "/AddMovie">
+            <button>
+                Add New Movie
+            </button>
+            </Link>
             <section className="movies">
                 {movies.map(movie => { 
                 const addNewMovie = () => { 
